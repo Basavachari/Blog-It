@@ -54,7 +54,7 @@ dotenv.config()
 
 
 // Using necessary middlewares
-app.use(cors({ origin: ['http://localhost:3000'], credentials: true }))
+app.use(cors({ origin: ['https://blog-it-frontend-0z6v.onrender.com','http://localhost:3000'], credentials: true }))
 app.set("trust proxy", 1)
 app.use(bodyParser.json())
 app.use(cookieParser())
