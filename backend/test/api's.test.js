@@ -29,7 +29,7 @@ describe('Api test cases', () => {
 
     // { /user/signup api test case }
     it('User should be able to signup to the application', async () => {
-        const response = await axios.post('http://localhost:4000/user/signup', {
+        const response = await axios.post('https://blog-it-backend-lbae.onrender.com/user/signup', {
             username: 'basavachari.b',
             email: 'user3@gmail.com',
             password: 'User@12345',
@@ -41,7 +41,7 @@ describe('Api test cases', () => {
 
     // { /user/login api test case}
     it('User should be able to login in to the application', async () => {
-        const response = await axios.post('http://localhost:4000/user/login', {
+        const response = await axios.post('https://blog-it-backend-lbae.onrender.com/user/login', {
             email: 'user3@gmail.com',
             password: 'User@12345'
         }, {
@@ -58,7 +58,7 @@ describe('Api test cases', () => {
         }
 
         // Use the cookieJar to manually set the cookies for subsequent requests
-        cookieJar.setCookieSync(response.headers['set-cookie'][0], 'http://localhost:4000');
+        cookieJar.setCookieSync(response.headers['set-cookie'][0], 'https://blog-it-backend-lbae.onrender.com');
 
         expect(response.data.msg).to.be.equal('Login SuccessFul')
     })
@@ -66,7 +66,7 @@ describe('Api test cases', () => {
 
     // { /blog/create api test case}
     it('User should be able to create a blog', async () => {
-        const response = await axios.post('http://localhost:4000/blog/create', {
+        const response = await axios.post('https://blog-it-backend-lbae.onrender.com/blog/create', {
             title: 'TestingBlog',
             aboutBlog: 'TesingAboutBlog',
             ownerId: ''
@@ -86,14 +86,14 @@ describe('Api test cases', () => {
     // { /blog/edit api test case}
     it('User should be able to edit the blog', async () => {
 
-        const blogsResponse = await axios.get('http://localhost:4000/blog/getallblogs', {
+        const blogsResponse = await axios.get('https://blog-it-backend-lbae.onrender.com/blog/getallblogs', {
             headers: {
                 'Cookie': `jwtToken=${token}`
             }
         })
 
         const allBlogs = blogsResponse.data.msg
-        const response = await axios.put('http://localhost:4000/blog/edit', {
+        const response = await axios.put('https://blog-it-backend-lbae.onrender.com/blog/edit', {
             title: 'TestingBlog Edited',
             aboutBlog: 'TesingAboutBlog Edited',
             blogId: allBlogs[0]._id
@@ -113,7 +113,7 @@ describe('Api test cases', () => {
     // { /blog/getallblogs api test case}
     it('User should be able to get all the blogs', async () => {
 
-        const blogsResponse = await axios.get('http://localhost:4000/blog/getallblogs', {
+        const blogsResponse = await axios.get('https://blog-it-backend-lbae.onrender.com/blog/getallblogs', {
             headers: {
                 'Cookie': `jwtToken=${token}`
             }
@@ -128,7 +128,7 @@ describe('Api test cases', () => {
     // { /blog/browseblogs api test case}
     it('User should be able to get all the blogs to browse', async () => {
 
-        const blogsResponse = await axios.get('http://localhost:4000/blog/browseblogs', {
+        const blogsResponse = await axios.get('https://blog-it-backend-lbae.onrender.com/blog/browseblogs', {
             headers: {
                 'Cookie': `jwtToken=${token}`
             }
@@ -143,7 +143,7 @@ describe('Api test cases', () => {
     // { /blog/getblogbyid api test case}
     it('User should be able to get the blog by blogId', async () => {
 
-        const blogsResponse = await axios.get('http://localhost:4000/blog/getallblogs', {
+        const blogsResponse = await axios.get('https://blog-it-backend-lbae.onrender.com/blog/getallblogs', {
             headers: {
                 'Cookie': `jwtToken=${token}`
             }
@@ -151,7 +151,7 @@ describe('Api test cases', () => {
 
         const blog = blogsResponse.data.msg
 
-        const response = await axios.post('http://localhost:4000/blog/getblogbyid', {
+        const response = await axios.post('https://blog-it-backend-lbae.onrender.com/blog/getblogbyid', {
             blogId: blog[0]._id
         },
             {
@@ -168,7 +168,7 @@ describe('Api test cases', () => {
     // { /blog/delete api test case}
     it('User should be able to delete the blog', async () => {
 
-        const blogsResponse = await axios.get('http://localhost:4000/blog/getallblogs', {
+        const blogsResponse = await axios.get('https://blog-it-backend-lbae.onrender.com/blog/getallblogs', {
             headers: {
                 'Cookie': `jwtToken=${token}`
             }
@@ -176,7 +176,7 @@ describe('Api test cases', () => {
 
         const allBlogs = blogsResponse.data.msg
 
-        const response = await axios.delete('http://localhost:4000/blog/delete', {
+        const response = await axios.delete('https://blog-it-backend-lbae.onrender.com/blog/delete', {
             data: {
                 blogId: allBlogs[0]._id
             },

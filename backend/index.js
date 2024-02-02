@@ -28,7 +28,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:4000',
+                url: 'https://blog-it-backend-lbae.onrender.com',
                 description: 'Local development server',
             },
         ],
@@ -67,7 +67,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(4000, (req, res) => {
-    console.log('Server is running on http://localhost:4000')
+    console.log('Server is running on https://blog-it-backend-lbae.onrender.com')
 })
 
 module.exports = app
