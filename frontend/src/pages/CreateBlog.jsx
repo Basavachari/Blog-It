@@ -19,7 +19,7 @@ const CreateBlog = () => {
     const handleFileChange = (e) => {
         const formData = new FormData()
         formData.append('file', e.target.files[0])
-        formData.append("upload_preset", "rap0jfwa")
+        formData.append("upload_preset", "sample")
         setImage(e.target.files[0])
         setFormData(formData)
     }

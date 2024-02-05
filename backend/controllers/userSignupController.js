@@ -74,26 +74,38 @@ const userDetailsErrors = require('../errors/userDetailsErrors.js')
 const registerUser = async (req, res) => {
 
     try {
+        const { username, email, password } = req.body;
 
-        const { username, email, password } = req.body
+        // Validate the input fields using Mongoose schema
+        const newUser = new Users({ username, email, password });
+        const validationError = newUser.validateSync();
 
-        if (password) {
-            const encryptedPassword = await bcrypt.hash(password, 10)
-            await new Users({ username, email, password: encryptedPassword }).save()
+        if (validationError) {
+            // Handle validation errors
+            const errors = Object.values(validationError.errors).map(error => error.message);
+            return res.status(400).json({ msg: errors });
         }
 
-        else {
-            await new Users({ username, email, password }).save()
-        }
+        // Hash the password
+        const encryptedPassword = await bcrypt.hash(password, 10);
 
-        // after saving the user we get the _id of the registered user and
-        // cretaes a JWT token for us to authorize the user.
-        const user = await Users.findOne({ email })
-        const token = jwt.sign({ user: { userid: user._id } }, process.env.JWT_SECRET)
-        res.cookie("jwtToken", token, { httpOnly: false, secure: true, sameSite: 'none' })
-        res.status(201).json({ msg: "Registered SuccessFully" })
+        // Create a new user with the hashed password
+        const user = new Users({ username, email, password: encryptedPassword });
+
+        // Save the user to the database
+        await user.save();
+
+        // Create and sign a JWT token
+        const token = jwt.sign({ user: { userid: user._id } }, process.env.JWT_SECRET);
+
+        // Set the JWT token as a cookie
+        res.cookie("jwtToken", token, { httpOnly: false, secure: true, sameSite: 'none' });
+
+        // Respond with a success message
+        res.status(201).json({ msg: "Registered SuccessFully" });
 
     } catch (error) {
+        // Handle other errors
         const errors = userDetailsErrors(error)
         res.status(500).json({ msg: errors })
     }

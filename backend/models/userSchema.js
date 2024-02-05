@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema({
             validator: (value) => {
                 return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
             },
-
             message: "Entered invalid email"
         }
     },
@@ -26,12 +25,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Password is required"],
         validate: {
-            validator: (value) => {
-                return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(value);
-            },
-            message: "Password must contain at least one uppercase letter, one lowercase letter, one special character, one digit."
+            validator: (value) => /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-]).{8,}$/.test(value),
+            message: "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one digit."
         }
     },
+    
 
     likedBlogs: {
         type: Array,
